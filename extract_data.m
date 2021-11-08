@@ -8,7 +8,7 @@
 % ["Hip L", "Hip R", "Knee L", "Knee R", "Ankle L", "Ankle R"]
 % but i'm too lazy to correct this code:3
 
-function [Data, DataformOut] = extract_data(fname, t1, t2, dt, save_output, s)
+function [Data, DataformOut] = extract_data(fname, t1, t2, dt)
 % read data from .ini and .txt which are coverted from trc, mot, sto
 % data must be preprocessed by ExtractOpensimResult.py
 % DataformOut = [nrow, ncol, isDegree, items...] in string
@@ -55,27 +55,5 @@ end
 % Data(:,1) = Data(:,1) - Data(1,1);
 tt = (0 :dt :(Data(end,1)-Data(1,1)))';
 Data = interp1(Data(:,1) - Data(1,1), Data, tt, 'makima');
-
-if nargin == 4 
-    save_output = false;
-end
-
-if save_output
-    if nargin == 5
-        s = "";
-    end
-    time = Data(:,1);
-    hip_angle_r = Data(:,2);
-    hip_angle_l = Data(:,3);
-    knee_angle_r = Data(:,4);
-    knee_angle_l = Data(:,5);
-    ankle_angle_r = Data(:,6);
-    ankle_angle_l = Data(:,7);
-
-    path = "Data_mat\\" + fname + s + ".mat";
-    save(path, 'time', 'hip_angle_r', 'hip_angle_l', ...
-               'knee_angle_r', 'knee_angle_l', ...
-               'ankle_angle_r', 'ankle_angle_l');  
-end
 
 end
