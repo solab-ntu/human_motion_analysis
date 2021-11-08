@@ -53,6 +53,9 @@ elseif size(Data,2) == 8
 end
 
 % Data(:,1) = Data(:,1) - Data(1,1);
+if nargin == 3
+    dt = mean(diff(Data(:,1)));
+end
 tt = (0 :dt :(Data(end,1)-Data(1,1)))';
 Data = interp1(Data(:,1) - Data(1,1), Data, tt, 'makima');
 
